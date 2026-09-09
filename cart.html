@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - Ahwet Hayat</title>
+  <link rel="icon" href="logo.png" type="image/png">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- ربط ملف التنسيقات -->
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .cart-container { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+    .cart-item { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; margin-bottom: 1rem; }
+    .cart-item img { width: 100px; height: 100px; border-radius: 12px; object-fit: cover; }
+    .item-details { flex: 1; }
+    .quantity-control { display: flex; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.1); padding: 0.3rem 0.8rem; border-radius: 20px; }
+    .quantity-control button { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+    .remove-btn { color: #ff4757; background: none; border: none; cursor: pointer; font-size: 1.2rem; transition: var(--transition); }
+    .remove-btn:hover { transform: scale(1.1); }
+    .order-summary { padding: 2rem; height: fit-content; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 1rem; color: var(--text-muted); }
+    .summary-total { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); font-size: 1.3rem; font-weight: 600; color: var(--primary-gold); }
+    
+    @media (max-width: 900px) {
+      .cart-container { grid-template-columns: 1fr; }
+      .cart-item { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="glass-panel">
+      <a href="index.html">
+        <span class="logo-text">Ahwet Hayat</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item" data-i18n="home">Home</a>
+        <a href="buffet.html" class="nav-item" data-i18n="buffet">Breakfast Buffet</a>
+        <a href="menu.html" class="nav-item" data-i18n="menu">Menu</a>
+        <a href="location.html" class="nav-item" data-i18n="location">Location</a>
+        <a href="contact.html" class="nav-item" data-i18n="contact">Contact Us</a>
+      </div>
+      <div class="nav-actions">
+        <a href="cart.html" class="btn-outline active" style="padding: 0.5rem 0.8rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;" title="Cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+        <button id="langToggle" class="btn-outline">العربية</button>
+        <button class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <main style="width: 92%; max-width: 1400px; margin: 2rem auto;">
+    <div class="section-header">
+      <h2 data-i18n="cart_title">Your Cart</h2>
+      <p data-i18n="cart_subtitle">Review your items before checkout.</p>
+    </div>
+
+    <div class="cart-container">
+      
+      <!-- الأقسام سيتم حقنها هنا عبر الجافاسكربت -->
+      <div class="cart-items" id="cartItemsContainer">
+        <!-- يتم توليد الأصناف هنا -->
+      </div>
+
+      <!-- ملخص الطلب -->
+      <div class="order-summary glass-panel" id="orderSummary" style="display: none;">
+        <h3 style="margin-bottom: 1.5rem;" data-i18n="order_summary">Order Summary</h3>
+        
+        <div class="summary-row">
+          <span data-i18n="subtotal">Subtotal</span>
+          <span dir="ltr" id="subtotalAmount">0.00 JD</span>
+        </div>
+        <div class="summary-row">
+          <span data-i18n="tax">Tax (16%)</span>
+          <span dir="ltr" id="taxAmount">0.00 JD</span>
+        </div>
+        
+        <div class="summary-total">
+          <span data-i18n="total">Total</span>
+          <span dir="ltr" id="totalAmount">0.00 JD</span>
+        </div>
+
+        <button onclick="checkoutWhatsApp()" class="btn-primary" style="width: 100%; margin-top: 2rem;">
+          <i class="fa-brands fa-whatsapp"></i> <span data-i18n="checkout_whatsapp">Order via WhatsApp</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3 class="logo-text">Ahwet Hayat</h3>
+        <p data-i18n="footer_desc">Ahwet Hayat Restaurant & Cafe. Experience the finest taste and premium atmosphere.</p>
+      </div>
+      <div class="footer-col">
+        <h3 data-i18n="contact_info">Contact Info</h3>
+        <p><i class="fa-solid fa-location-dot"></i> <span data-i18n="address_short">Gardens, Wasfi Al-Tal St.</span></p>
+        <p><i class="fa-solid fa-phone"></i> <span dir="ltr">+962 795 968 000</span></p>
+        <p><i class="fa-regular fa-envelope"></i> info@ahwethayat.com</p>
+      </div>
+      <div class="footer-col">
+        <h3 data-i18n="social_media">Follow Us</h3>
+        <div style="display: flex; gap: 1rem; font-size: 1.5rem;">
+          <a href="https://www.instagram.com/ahwethayat"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/ahwethayat"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.tiktok.com/@ahwethayat"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Ahwet Hayat. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- تم ربط ملف البيانات لتجنب أخطاء قراءة المنتجات -->
+  <script src="menu_data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
