@@ -253,10 +253,12 @@ function updateCartQuantity(index, change) {
   let cart = JSON.parse(localStorage.getItem('ahwet_cart')) || [];
   if (cart[index]) {
     cart[index].quantity += change;
+    // منع الكمية من النزول عن 1 (إذا أراد الحذف يستخدم زر سلة المهملات)
     if (cart[index].quantity < 1) cart[index].quantity = 1;
+    
     localStorage.setItem('ahwet_cart', JSON.stringify(cart));
-    updateCartBadge();
-    renderCart(); 
+    updateCartBadge(); // تحديث الرقم العائم
+    renderCart(); // إعادة رسم السلة بالسعر الجديد
   }
 }
 
